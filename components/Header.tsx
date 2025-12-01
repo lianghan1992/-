@@ -24,7 +24,7 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, user })
 
     return (
         <header className="bg-white/80 backdrop-blur-xl border-b border-slate-200/60 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.02)] sticky top-0 z-50">
-            <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="w-full px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16 sm:h-18">
                     {/* Left: App Title / Main View */}
                     <div className="flex items-center">

@@ -26,7 +26,7 @@ import { CompetitivenessMatrix } from './CompetitivenessMatrix';
 const getReliabilityInfo = (score: number) => {
     switch (score) {
         case 4: return { text: '官方证实', color: 'green', Icon: CheckCircleIcon, bg: 'bg-green-50', textCol: 'text-green-700', border: 'border-green-200', badge: 'bg-green-100 text-green-800' };
-        case 3: return { text: '可信度高', color: 'blue', Icon: ShieldCheckIcon, bg: 'bg-blue-50', textCol: 'text-blue-700', border: 'border-blue-200', badge: 'bg-blue-100 text-blue-800' };
+        case 3: return { text: '高可信度', color: 'blue', Icon: ShieldCheckIcon, bg: 'bg-blue-50', textCol: 'text-blue-700', border: 'border-blue-200', badge: 'bg-blue-100 text-blue-800' };
         case 2: return { text: '疑似传闻', color: 'amber', Icon: AnnotationIcon, bg: 'bg-amber-50', textCol: 'text-amber-700', border: 'border-amber-200', badge: 'bg-amber-100 text-amber-800' };
         case 1: return { text: '已经辟谣', color: 'red', Icon: ShieldExclamationIcon, bg: 'bg-red-50', textCol: 'text-red-700', border: 'border-red-200', badge: 'bg-red-100 text-red-800' };
         default: return { text: '未知', color: 'gray', Icon: QuestionMarkCircleIcon, bg: 'bg-gray-50', textCol: 'text-gray-700', border: 'border-gray-200', badge: 'bg-gray-100 text-gray-800' };
@@ -236,14 +236,15 @@ export const CompetitivenessDashboard: React.FC = () => {
                 setAllBrands(b);
                 setDimensions(d);
                 
-                // 设置默认选中品牌
-                const defaults = ['小米汽车', '蔚来汽车', '理想汽车', '小鹏汽车', '特斯拉', '比亚迪'];
+                // 设置默认选中品牌 - Updated to 7 items
+                const defaults = ['小米汽车', '蔚来汽车', '理想汽车', '小鹏汽车', '特斯拉', '比亚迪', '问界'];
+                
                 // Filter to ensure only existing brands are selected (optional validation)
                 const initialSelection = defaults.filter(db => b.includes(db) || b.some(apiB => apiB.includes(db.replace('汽车', ''))));
                 
-                // Fallback: If minimal matching, just use defaults assuming fuzzy match or use first 6
+                // Fallback: If minimal matching, just use defaults assuming fuzzy match or use first 7
                 if (initialSelection.length === 0 && b.length > 0) {
-                     setSelectedBrands(b.slice(0, 6));
+                     setSelectedBrands(b.slice(0, 7));
                 } else {
                      // Using specific strings from the prompt, assuming API returns matching names or we add them.
                      setSelectedBrands(defaults);
