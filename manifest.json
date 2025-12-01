@@ -1,0 +1,21 @@
+{
+  "name": "Auto Insight - 智能汽车情报平台",
+  "short_name": "Auto Insight",
+  "description": "一个AI驱动的、垂直于汽车行业的情报即服务（IaaS）平台。它能够主动感知、深度分析并生成决策依据。",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script type="importmap">
+  {
+    "imports": {
+      "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.0.4",
+      "react/": "https://aistudiocdn.com/react@^19.2.0/",
+      "react": "https://aistudiocdn.com/react@^19.2.0",
+      "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+      "cors": "https://aistudiocdn.com/cors@^2.8.5",
+      "http": "https://aistudiocdn.com/http@^0.0.1-security",
+      "express": "https://aistudiocdn.com/express@^5.1.0",
+      "vite": "https://aistudiocdn.com/vite@^7.1.9",
+      "url": "https://aistudiocdn.com/url@^0.11.4",
+      "fs": "https://aistudiocdn.com/fs@^0.0.1-security",
+      "path": "https://aistudiocdn.com/path@^0.12.7",
+      "http-proxy-middleware": "https://aistudiocdn.com/http-proxy-middleware@^3.0.5",
+      "socket.io-client": "https://aistudiocdn.com/socket.io-client@^4.8.1",
+      "https": "https://aistudiocdn.com/https@^1.0.0",
+      "socket.io": "https://aistudiocdn.com/socket.io@^4.8.1"
+    }
+  }
+  </script>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <!-- PWA Meta Tags for iOS -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#ffffff" />
+  
+  <!-- iOS specific settings -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Auto Insight" />
+  <!-- iOS requires a PNG image, SVG is not supported for home screen icons -->
+  <link rel="apple-touch-icon" href="/logo.png" />
+
+  <title>Auto Insight - 智能汽车情报平台</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/marked/13.0.1/marked.min.js"></script>
+  
+  <!-- 引入 HarmonyOS Sans (如果CDN有) 或者使用后备字体栈 -->
+  <style>
+    /* 字体定义 */
+    @font-face {
+      font-family: 'HarmonyOS Sans SC';
+      font-style: normal;
+      font-weight: 400;
+      src: local('HarmonyOS Sans SC'), local('PingFang SC'), local('Microsoft YaHei');
+      font-display: swap;
+    }
+
+    body {
+      /* 优先使用 HarmonyOS Sans，其次是系统默认 */
+      font-family: 'HarmonyOS Sans SC', 'PingFang SC', 'Microsoft YaHei', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background-color: #f8f9fa;
+    }
+    
+    /* 滚动条美化 */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* 隐藏滚动条但保留功能 */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+    }
+
+    .prose {
+      max-width: 65ch;
+      color: #374151;
+    }
+    .prose a {
+      color: #4f46e5;
+      text-decoration: none;
+    }
+    .prose a:hover {
+      text-decoration: underline;
+    }
+    .animate-in {
+      animation: enter 0.3s ease-out;
+    }
+    .fade-in-0 {
+      opacity: 0;
+      animation-fill-mode: forwards;
+    }
+    .zoom-in-95 {
+      transform: scale(0.95);
+    }
+    @keyframes enter {
+      from {
+        opacity: 0;
+        transform: scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
