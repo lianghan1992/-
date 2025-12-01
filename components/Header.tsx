@@ -13,40 +13,9 @@ interface HeaderProps {
     user: User;
 }
 
-// 仅保留竞争力看板
-const navItems: { view: View; label: string; icon: React.FC<React.SVGProps<SVGSVGElement>> }[] = [
-    { view: 'techboard', label: '竞争力看板', icon: ChartIcon },
-];
-
-const NavItem: React.FC<{
-    view: View;
-    label: string;
-    icon: React.FC<React.SVGProps<SVGSVGElement>>;
-    isActive: boolean;
-    onClick: () => void;
-}> = ({ label, icon: Icon, isActive, onClick }) => (
-    <button
-        onClick={onClick}
-        title={label}
-        className={`
-            group flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 flex-shrink-0
-            ${
-            isActive
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-200 transform scale-105'
-                : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
-        }`}
-    >
-        <Icon className={`w-5 h-5 flex-shrink-0 ${isActive ? 'text-white' : 'text-slate-400 group-hover:text-slate-600'}`} />
-        <span className="whitespace-nowrap">{label}</span>
-    </button>
-);
-
-
 export const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, user }) => {
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
-    const finalNavItems = [...navItems];
-    
     const handleLogout = (e: React.MouseEvent) => {
         e.preventDefault();
         localStorage.removeItem('accessToken');
@@ -57,18 +26,19 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, user })
         <header className="bg-white/80 backdrop-blur-xl border-b border-slate-200/60 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.02)] sticky top-0 z-50">
             <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16 sm:h-18">
-                    {/* Desktop Nav */}
-                    <div className="flex items-center gap-4 lg:gap-8 overflow-hidden flex-1">
-                        <nav className="flex items-center gap-1 lg:gap-2 overflow-x-auto no-scrollbar mask-image-r">
-                            {finalNavItems.map(item => (
-                                <NavItem 
-                                    key={item.view}
-                                    {...item}
-                                    isActive={currentView === item.view}
-                                    onClick={() => onNavigate(item.view)}
-                                />
-                            ))}
-                        </nav>
+                    {/* Left: App Title / Main View */}
+                    <div className="flex items-center">
+                        <button 
+                            onClick={() => onNavigate('techboard')}
+                            className="flex items-center gap-3 group focus:outline-none"
+                        >
+                            <div className="p-2 bg-indigo-600 rounded-xl shadow-lg shadow-indigo-200 group-hover:scale-105 transition-transform duration-300">
+                                <ChartIcon className="w-6 h-6 text-white" />
+                            </div>
+                            <span className="text-xl font-extrabold text-slate-800 tracking-tight group-hover:text-indigo-600 transition-colors">
+                                竞争力看板
+                            </span>
+                        </button>
                     </div>
 
                     {/* Right side: User Menu */}

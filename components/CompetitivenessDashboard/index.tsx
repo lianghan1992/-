@@ -237,17 +237,15 @@ export const CompetitivenessDashboard: React.FC = () => {
                 setDimensions(d);
                 
                 // 设置默认选中品牌
-                const defaults = ['小米汽车', '蔚来汽车', '理想汽车', '小鹏汽车'];
+                const defaults = ['小米汽车', '蔚来汽车', '理想汽车', '小鹏汽车', '特斯拉', '比亚迪'];
                 // Filter to ensure only existing brands are selected (optional validation)
                 const initialSelection = defaults.filter(db => b.includes(db) || b.some(apiB => apiB.includes(db.replace('汽车', ''))));
-                // Fallback: If minimal matching, just use defaults assuming fuzzy match or use first 4
+                
+                // Fallback: If minimal matching, just use defaults assuming fuzzy match or use first 6
                 if (initialSelection.length === 0 && b.length > 0) {
-                     setSelectedBrands(b.slice(0, 4));
+                     setSelectedBrands(b.slice(0, 6));
                 } else {
                      // Using specific strings from the prompt, assuming API returns matching names or we add them.
-                     // The API might return "小米" instead of "小米汽车". 
-                     // Let's assume user wants these regardless, or we match closely.
-                     // For now, just set what the user requested, the matrix handles filtering.
                      setSelectedBrands(defaults);
                 }
 
