@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { LogoIcon, ArrowRightIcon } from '../icons';
+import { ArrowRightIcon } from '../icons';
 
 interface HomePageProps {
     onEnter: () => void;
@@ -48,19 +48,6 @@ export const HomePage: React.FC<HomePageProps> = ({ onEnter }) => {
             <BackgroundBlobs />
             
             <div className="relative z-10 w-full max-w-md px-6 text-center">
-                <div className="mb-8 flex justify-center">
-                    <div className="relative flex items-center justify-center w-20 h-20 bg-white rounded-3xl shadow-xl shadow-indigo-500/10 border border-white/50 backdrop-blur-xl">
-                        <LogoIcon className="w-12 h-12 text-indigo-600" />
-                    </div>
-                </div>
-
-                <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-2">
-                    Auto Insight
-                </h1>
-                <p className="text-slate-500 text-lg mb-10 font-medium">
-                    车企竞争力看板系统
-                </p>
-
                 <div className="space-y-4">
                     <button 
                         onClick={onEnter} 
@@ -79,7 +66,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onEnter }) => {
             {/* Footer */}
             <footer className="absolute bottom-6 w-full text-center z-10">
                 <p className="text-xs text-slate-400/60">
-                    &copy; 2024 Automotive Intelligence Platform
+                    &copy; 2024 Competitiveness Dashboard
                 </p>
             </footer>
         </div>

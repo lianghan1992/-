@@ -1,7 +1,8 @@
+
 import React, { useState } from 'react';
 import { login, register } from '../../api';
 import { User } from '../../types';
-import { CloseIcon, LogoIcon } from '../icons';
+import { CloseIcon } from '../icons';
 
 interface AuthModalProps {
     onLoginSuccess: (user: User) => void;
@@ -71,14 +72,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onLoginSuccess, onClose })
                 </button>
 
                 <div className="p-8">
-                    <div className="flex flex-col items-center justify-center gap-3 mb-8">
-                        <div className="w-12 h-12 rounded-xl bg-indigo-50 flex items-center justify-center">
-                            <LogoIcon className="w-10 h-10 text-indigo-600"/>
-                        </div>
-                        <span className="font-extrabold text-2xl text-slate-900 tracking-tight">Auto Insight</span>
-                        <p className="text-slate-500 text-sm">AI 驱动的汽车行业情报平台</p>
-                    </div>
-
                     <div className="flex border-b border-slate-200 mb-6">
                         <button onClick={() => setMode('login')} className={`flex-1 py-3 text-sm font-bold border-b-2 transition-colors ${mode === 'login' ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-slate-500 hover:text-slate-800'}`}>
                             登录

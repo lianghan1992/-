@@ -3,11 +3,7 @@ import React, { useState } from 'react';
 import { User, View } from '../types';
 import {
     ChartIcon,
-    GearIcon,
-    LogoIcon,
-    ChevronDownIcon,
-    CloseIcon,
-    SparklesIcon
+    ChevronDownIcon
 } from './icons';
 
 interface HeaderProps {
@@ -46,13 +42,10 @@ const NavItem: React.FC<{
 );
 
 
-export const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, onUpgrade, user }) => {
+export const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, user }) => {
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
     const finalNavItems = [...navItems];
-    if (user.email === '326575140@qq.com') {
-        finalNavItems.push({ view: 'admin', label: '后台管理', icon: GearIcon });
-    }
     
     const handleLogout = (e: React.MouseEvent) => {
         e.preventDefault();
@@ -64,19 +57,8 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, onUpgra
         <header className="bg-white/80 backdrop-blur-xl border-b border-slate-200/60 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.02)] sticky top-0 z-50">
             <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16 sm:h-18">
-                    {/* Logo and Desktop Nav */}
+                    {/* Desktop Nav */}
                     <div className="flex items-center gap-4 lg:gap-8 overflow-hidden flex-1">
-                        <div className="flex items-center gap-2.5 cursor-pointer group flex-shrink-0 pr-4" onClick={() => onNavigate('techboard')}>
-                            <div className="relative flex items-center justify-center w-9 h-9">
-                                <LogoIcon className="w-9 h-9 text-indigo-600 transition-transform duration-300 group-hover:rotate-12 filter drop-shadow-sm" />
-                            </div>
-                            <span className="font-black text-xl tracking-tighter text-slate-900 hidden sm:block whitespace-nowrap">
-                                Auto<span className="text-indigo-600">Insight</span>
-                            </span>
-                        </div>
-                        
-                        <div className="hidden h-8 w-px bg-slate-200 lg:block flex-shrink-0"></div>
-
                         <nav className="flex items-center gap-1 lg:gap-2 overflow-x-auto no-scrollbar mask-image-r">
                             {finalNavItems.map(item => (
                                 <NavItem 
@@ -89,16 +71,8 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, onUpgra
                         </nav>
                     </div>
 
-                    {/* Right side: Upgrade, User Menu */}
+                    {/* Right side: User Menu */}
                     <div className="flex items-center gap-3 sm:gap-4 flex-shrink-0">
-                        <button
-                            onClick={onUpgrade}
-                            className="hidden lg:inline-flex items-center justify-center px-4 py-2 text-xs font-bold text-white bg-gradient-to-r from-indigo-600 to-violet-600 rounded-full shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 hover:from-indigo-500 hover:to-violet-500 transition-all transform hover:-translate-y-0.5 whitespace-nowrap"
-                        >
-                            <SparklesIcon className="w-3.5 h-3.5 mr-1.5" />
-                            升级
-                        </button>
-
                         <div className="relative">
                             <button
                                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}

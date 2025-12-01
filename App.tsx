@@ -2,15 +2,12 @@
 import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import { Header } from './components/Header';
 import { AuthModal } from './components/HomePage/AuthModal';
-import { PricingModal } from './components/PricingModal';
 import { HomePage } from './components/HomePage/index';
 import { User, View, Subscription } from './types';
 import { getSubscriptions, getMe } from './api';
 
 // Lazy load components with named export adaptation
-// Removed unused components: Dashboard, StrategicCockpit, DeepDives, IndustryEvents, ReportGenerator
 const CompetitivenessDashboard = React.lazy(() => import('./components/CompetitivenessDashboard/index').then(module => ({ default: module.CompetitivenessDashboard })));
-const AdminPage = React.lazy(() => import('./components/Admin/index').then(module => ({ default: module.AdminPage })));
 
 // Loading Fallback Component
 const PageLoader = () => (
@@ -30,7 +27,6 @@ const App: React.FC = () => {
   const [view, setView] = useState<View>('techboard'); // Default to techboard
   const [isLoading, setIsLoading] = useState(true);
   const [showAuthModal, setShowAuthModal] = useState(false);
-  const [showPricingModal, setShowPricingModal] = useState(false);
   
   // Keep subscriptions loading as it might be used by header or future features, though minimal now
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
@@ -104,8 +100,6 @@ const App: React.FC = () => {
     switch (view) {
       case 'techboard':
         return <CompetitivenessDashboard />;
-      case 'admin':
-        return <AdminPage />;
       default:
         // Default fallthrough to techboard for any unknown route in this trimmed version
         return <CompetitivenessDashboard />;
@@ -118,14 +112,13 @@ const App: React.FC = () => {
             user={user}
             currentView={view}
             onNavigate={handleNavigate}
-            onUpgrade={() => setShowPricingModal(true)}
+            onUpgrade={() => {}}
         />
         <main className="flex-1 min-h-0">
           <Suspense fallback={<PageLoader />}>
             {renderView()}
           </Suspense>
         </main>
-        {showPricingModal && <PricingModal onClose={() => setShowPricingModal(false)} />}
     </div>
   );
 };
