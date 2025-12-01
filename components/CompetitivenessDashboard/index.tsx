@@ -271,7 +271,10 @@ export const CompetitivenessDashboard: React.FC = () => {
                 const sorted = [...detail.history].sort((a, b) => new Date(b.event_time).getTime() - new Date(a.event_time).getTime());
                 initialHistory = sorted[0];
             }
-            handleHistoryClick(initialHistory); 
+            
+            // Wait for history article to load before showing modal to avoid empty state
+            await handleHistoryClick(initialHistory); 
+            
             setIsDetailModalOpen(true);
         } catch (e) {
             console.error("Failed to load details");
@@ -364,7 +367,9 @@ export const CompetitivenessDashboard: React.FC = () => {
                                         <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mb-4 border border-slate-200">
                                             <DocumentTextIcon className="w-10 h-10 text-slate-300" />
                                         </div>
-                                        <p className="font-bold text-slate-500">请选择左侧历史记录以查看原文</p>
+                                        <p className="font-bold text-slate-500">
+                                            {selectedHistory ? '正在加载原文...' : '请选择左侧历史记录以查看原文'}
+                                        </p>
                                     </div>
                                 )}
                             </div>
