@@ -1,7 +1,6 @@
-
 // src/api/intelligence.ts
 
-import { INTELLIGENCE_SERVICE_PATH } from '../config';
+import { INTELLIGENCE_SERVICE_PATH, INTELSPIDER_SERVICE_PATH } from '../config';
 import { 
     Subscription, InfoItem, SystemSource, PaginatedResponse, 
     SearchResult,
@@ -80,8 +79,19 @@ export const getArticles = (params: any): Promise<PaginatedResponse<InfoItem>> =
     return apiFetch<PaginatedResponse<InfoItem>>(`${INTELLIGENCE_SERVICE_PATH}/articles${query}`);
 };
 
-export const getArticleById = (articleId: string): Promise<InfoItem> => 
-    apiFetch<InfoItem>(`${INTELLIGENCE_SERVICE_PATH}/articles/${articleId}`);
+/**
+ * 获取单篇文章详情
+ * 使用正确的 API 路径: /intelspider/articles/{article_uuid}
+ * 并将后端返回的 uuid/url 映射为前端 InfoItem 所需的 id/original_url
+ */
+export const getArticleById = async (articleId: string): Promise<InfoItem> => {
+    const data = await apiFetch<any>(`${INTELSPIDER_SERVICE_PATH}/articles/${articleId}`);
+    return {
+        ...data,
+        id: data.uuid, // 映射 uuid 为 id
+        original_url: data.url // 映射 url 为 original_url
+    };
+};
 
 // Updated: Batch delete articles with query params to support GET-like calls if needed, or stick to body. 
 // Doc says query params supported for frontend link convenience.
