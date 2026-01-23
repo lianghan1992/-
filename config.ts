@@ -6,8 +6,8 @@
  */
 
 // 统一 API 根地址
-// 使用相对路径 '/api' 以利用 vite.config.ts 中的代理配置，解决开发环境的 CORS (Failed to fetch) 问题
-export const API_BASE_URL = '/api';
+// 在生产环境中直接指向后端服务器，避免相对路径 '/api' 在没有反向代理的情况下指向前端服务器导致 404
+export const API_BASE_URL = 'https://autoinsight_api.jingyu.today:8081/api';
 
 // Full path for the user authentication & subscription service
 export const USER_SERVICE_PATH = `${API_BASE_URL}/user`;

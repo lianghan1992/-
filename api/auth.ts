@@ -16,10 +16,4 @@ export const login = async (email: string, password: string): Promise<{ accessTo
     });
 };
 
-export const register = (username: string, email: string, password: string): Promise<{ message: string }> =>
-    apiFetch<{ message: string }>(`${USER_SERVICE_PATH}/register`, {
-        method: 'POST',
-        body: JSON.stringify({ username, email, password }),
-    });
-
 export const getMe = (): Promise<User> => apiFetch<User>(`${USER_SERVICE_PATH}/me`);
