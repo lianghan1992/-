@@ -74,8 +74,17 @@ export const analyzeArticleStage1 = (data: { article_id: string; title?: string;
 
 // --- Technical Intelligence (Stage 2) ---
 
-export const getTechItems = (params: { skip?: number; limit?: number; vehicle_brand?: string; tech_dimension?: string }): Promise<TechItem[]> => {
-    const query = createApiQuery(params);
+export const getTechItems = (params: { page?: number; size?: number; vehicle_brand?: string; tech_dimension?: string; only_reviewed?: boolean }): Promise<TechItem[]> => {
+    // Update: Map params to new API v2 standards (page/size, only_reviewed)
+    const queryParams: any = {
+        page: params.page || 1,
+        size: params.size || 1000, // Default large size for dashboard matrix
+        only_reviewed: params.only_reviewed ?? true
+    };
+    if (params.vehicle_brand) queryParams.vehicle_brand = params.vehicle_brand;
+    if (params.tech_dimension) queryParams.tech_dimension = params.tech_dimension;
+
+    const query = createApiQuery(queryParams);
     return apiFetch<TechItem[]>(`${COMPETITIVENESS_SERVICE_PATH}/tech-items${query}`);
 }
 
@@ -85,9 +94,8 @@ export const getTechItemDetail = (itemId: string): Promise<TechItem> => {
 
 
 // =========================================================================================
-// Legacy / Dashboard APIs (Keeping these for now to support the User Dashboard view)
-// In a full refactor, these would also be updated to match the new backend structure
-// or the backend would need to provide these specific endpoints.
+// Legacy / Dashboard APIs 
+// Updated paths to match new spec: /api/competitiveness/stats/...
 // =========================================================================================
 
 // --- Knowledge Base (Read & Export) ---
@@ -141,12 +149,15 @@ export const exportKnowledgeBase = async (params: any): Promise<void> => {
 };
 
 
-// --- Dashboard & Stats ---
+// --- Dashboard & Stats (Updated Paths) ---
 
 export const getDashboardOverview = (): Promise<DashboardOverview> => {
-    return apiFetch<DashboardOverview>(`${COMPETITIVENESS_ANALYSIS_SERVICE_PATH}/dashboard/overview`);
+    return apiFetch<DashboardOverview>(`${COMPETITIVENESS_ANALYSIS_SERVICE_PATH}/stats/overview`);
 };
 
+// Trends might not be in new spec, keeping path or updating if needed. 
+// Assuming trend API is not critical or not mentioned in update, keeping old path structure 
+// but pointing to COMPETITIVENESS_ANALYSIS_SERVICE_PATH which is now /api/competitiveness
 export const getDashboardTrends = (params: any): Promise<{ series: DashboardTrendItem[] }> => {
     const query = createApiQuery(params);
     return apiFetch<{ series: DashboardTrendItem[] }>(`${COMPETITIVENESS_ANALYSIS_SERVICE_PATH}/dashboard/trends${query}`);
@@ -154,12 +165,12 @@ export const getDashboardTrends = (params: any): Promise<{ series: DashboardTren
 
 export const getDashboardDistributionBrand = (params: any): Promise<{ items: DashboardDistributionItem[] }> => {
     const query = createApiQuery(params);
-    return apiFetch<{ items: DashboardDistributionItem[] }>(`${COMPETITIVENESS_ANALYSIS_SERVICE_PATH}/dashboard/distribution/brand${query}`);
+    return apiFetch<{ items: DashboardDistributionItem[] }>(`${COMPETITIVENESS_ANALYSIS_SERVICE_PATH}/stats/by-brand${query}`);
 };
 
 export const getDashboardDistributionTechDimension = (params: any): Promise<{ items: DashboardDistributionItem[] }> => {
     const query = createApiQuery(params);
-    return apiFetch<{ items: DashboardDistributionItem[] }>(`${COMPETITIVENESS_ANALYSIS_SERVICE_PATH}/dashboard/distribution/tech_dimension${query}`);
+    return apiFetch<{ items: DashboardDistributionItem[] }>(`${COMPETITIVENESS_ANALYSIS_SERVICE_PATH}/stats/by-dimension${query}`);
 };
 
 export const getDashboardDistributionSubDimension = (techDimension: string, params: any): Promise<{ items: DashboardDistributionItem[] }> => {

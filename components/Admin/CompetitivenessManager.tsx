@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { 
     getCompetitivenessStatus, toggleCompetitivenessService,
@@ -538,8 +539,8 @@ const IntelligenceDatabase: React.FC = () => {
             const res = await getTechItems({
                 vehicle_brand: filters.brand || undefined,
                 tech_dimension: filters.dimension || undefined,
-                skip: (page - 1) * 20,
-                limit: 20
+                page: page,
+                size: 20
             });
             setItems(res);
         } catch (e) {

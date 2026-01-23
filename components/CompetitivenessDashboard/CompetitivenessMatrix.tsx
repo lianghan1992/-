@@ -64,12 +64,13 @@ export const CompetitivenessMatrix: React.FC<CompetitivenessMatrixProps> = ({
 
     // Data Processing
     const { matrixMap, brandCounts, maxCount } = useMemo(() => {
-        // Map<Brand, Map<DimId, Map<SubName, Item>>>
+        // Map<BrandName, Map<DimName, Map<SubDimName, Item>>>
         const map = new Map<string, Map<string, Map<string, TechItem>>>();
         
         // 1. Build Map & Deduplicate
         items.forEach(item => {
-            // Fuzzy match brand name
+            // Fuzzy match brand name if needed, or direct match
+            // API v2 now returns actual brand strings in item.vehicle_brand
             let matchedBrand = brands.find(b => item.vehicle_brand.includes(b) || b.includes(item.vehicle_brand));
             if (!matchedBrand && brands.some(b => item.vehicle_brand.includes(b.replace('汽车', '')))) {
                  matchedBrand = brands.find(b => item.vehicle_brand.includes(b.replace('汽车', '')));
@@ -81,11 +82,11 @@ export const CompetitivenessMatrix: React.FC<CompetitivenessMatrixProps> = ({
             if (!map.has(matchedBrand)) map.set(matchedBrand, new Map());
             const brandMap = map.get(matchedBrand)!;
             
-            const dimObj = dimensions.find(d => d.name === item.tech_dimension);
-            const dimId = dimObj ? dimObj.id : item.tech_dimension;
+            // Use Dimension Name as key (API v2 change: ID association removed)
+            const dimKey = item.tech_dimension;
 
-            if (!brandMap.has(dimId)) brandMap.set(dimId, new Map());
-            const dimMap = brandMap.get(dimId)!;
+            if (!brandMap.has(dimKey)) brandMap.set(dimKey, new Map());
+            const dimMap = brandMap.get(dimKey)!;
             
             // De-duplication: latest & highest reliability
             const existing = dimMap.get(item.secondary_tech_dimension);
@@ -216,7 +217,8 @@ export const CompetitivenessMatrix: React.FC<CompetitivenessMatrixProps> = ({
                                 <div className="flex-1 p-3 space-y-4 bg-slate-50/50 overflow-y-auto custom-scrollbar pb-6">
                                     {dimensions.map((dim, dimIndex) => {
                                         const subDims = dim.sub_dimensions || [];
-                                        const brandDimMap = brandData?.get(dim.id);
+                                        // Match by name now
+                                        const brandDimMap = brandData?.get(dim.name);
                                         
                                         // 1. Filter sub-dimensions that actually have data for this brand
                                         const activeSubDimsForBrand = subDims.filter(sub => brandDimMap?.has(sub));
@@ -302,7 +304,7 @@ export const CompetitivenessMatrix: React.FC<CompetitivenessMatrixProps> = ({
                                     
                                     {/* Fallback if all dimensions are hidden */}
                                     {dimensions.every(dim => {
-                                        const brandDimMap = brandData?.get(dim.id);
+                                        const brandDimMap = brandData?.get(dim.name);
                                         const subDims = dim.sub_dimensions || [];
                                         return !subDims.some(sub => brandDimMap?.has(sub));
                                     }) && (

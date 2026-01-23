@@ -1,4 +1,5 @@
 
+
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { 
     TechItem,
@@ -250,7 +251,8 @@ export const CompetitivenessDashboard: React.FC = () => {
                      setSelectedBrands(defaults);
                 }
 
-                const techItems = await getTechItems({ limit: 1000 }); 
+                // Update to use 'size' instead of 'limit' per new API spec
+                const techItems = await getTechItems({ size: 1000 }); 
                 setItems(techItems);
             } catch (e) {
                 console.error(e);

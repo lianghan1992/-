@@ -98,7 +98,7 @@ export const DashboardWidgets: React.FC = () => {
                     // 1. 情报服务：今日文章
                     searchArticlesFiltered({ publish_date_start: todayStart, query_text: '*', limit: 1, page: 1 }).catch(() => ({ total: 0 })),
                     // 2. 竞争力服务：获取技术情报列表并统计数量 (替代旧版 Dashboard API)
-                    getTechItems({ limit: 1000 }).catch(() => []),
+                    getTechItems({ size: 1000 }).catch(() => []),
                     // 3. 深度洞察服务：已处理文档
                     getDeepInsightTasksStats().catch(() => ({ completed: 0 })),
                     // 4. 直播服务：即将开始
